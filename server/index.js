@@ -3,6 +3,7 @@ import express from "express"; // Express framework for building the web server
 import cors from "cors"; // CORS middleware to allow cross-origin requests
 import dotenv from "dotenv"; // dotenv to load environment variables from a .env file
 import mongoose from "mongoose"; // Mongoose for connecting and working with MongoDB
+import Movie from "./models/Movie.js";
 
 // Load environment variables from .env file into process.env
 dotenv.config();
@@ -20,27 +21,68 @@ app.use(cors());
 
 // Function to connect to MongoDB database
 const connectDB = async () => {
-  // Use mongoose to connect to the MongoDB URL specified in environment variables
-  const connect = await mongoose.connect(process.env.MONGODB_URL);
+  try {
+    // Use mongoose to connect to the MongoDB URL specified in environment variables
+    const connect = await mongoose.connect(process.env.MONGODB_URL);
 
-  // process is a global object inn Node.js.
-  /*  process.env
+    // process is a global object inn Node.js.
+    /*  process.env
       env is a property of process.
       It is an object containing the environment variables of the system/process.*/
 
-  if (connect) {
-    console.log("\n📶 MongoDB connected");
+    if (connect) {
+      console.log("\n📶 MongoDB connected");
+    }
+  } catch (error) {
+    console.error(`\n❌ MongoDB connection error:${error.message}`);
   }
 };
 
-app.get("/health", (req, res) => {
+app.get("/", (req, res) => {
   // Respond with JSON indicating the server is working
   res.json({ status: "OK", message: "Server is healthy" });
   // Converts the provided JavaScript object or array into a JSON string (using JSON.stringify() internally).
 });
 
-// Define the port on which the server should run
-// It first checks if PORT is defined in environment variables, otherwise defaults to 8080
+app.post("/movies", async (req, res) => {
+  const {
+    title,
+    description,
+    images,
+    category,
+    director,
+    releaseYear,
+    rating,
+  } = req.body;
+
+  const newMovie = new Movie({
+    title,
+    description,
+    images,
+    category,
+    director,
+    releaseYear,
+    rating,
+  });
+
+  const savedMovie = await newMovie.save();
+
+  res.json({
+    Status: "OK",
+    data: newMovie,
+    message: "Movie added successfully",
+  });
+});
+
+app.get("/movies", async (req, res) => {
+  const movies = await Movie.find();
+  res.json({
+    success: true,
+    data: movies,
+    message: "Movies fetched successfully",
+  });
+});
+
 const PORT = process.env.PORT || 8080;
 
 // Start the server and listen for incoming requests on the defined port
