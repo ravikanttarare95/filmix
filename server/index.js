@@ -4,7 +4,12 @@ import cors from "cors"; // CORS middleware to allow cross-origin requests
 import dotenv from "dotenv"; // dotenv to load environment variables from a .env file
 import mongoose from "mongoose"; // Mongoose for connecting and working with MongoDB
 import Movie from "./models/Movie.js";
-import { addMovie, getMovies, getMovieById } from "./controllers/Movies.js";
+import {
+  addMovie,
+  getMovies,
+  getMovieById,
+  getMoviesSearch,
+} from "./controllers/Movies.js";
 
 // Load environment variables from .env file into process.env
 dotenv.config();
@@ -46,6 +51,8 @@ app.get("/", (req, res) => {
 });
 
 app.post("/movies", addMovie);
+
+app.get("/movies/search", getMoviesSearch);
 
 app.get("/movies", getMovies);
 

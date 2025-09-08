@@ -89,4 +89,46 @@ const getMovieById = async (req, res) => {
   }
 };
 
-export { addMovie, getMovies, getMovieById };
+const getMoviesSearch = async (req, res) => {
+  try {
+    const { q } = req.query;
+    if (!q || q.trim() === "") {
+      return res.status(400).json({
+        success: false,
+        data: null,
+        message: "Please provide a search query",
+      });
+    }
+
+    const movies = await Movie.find({
+      $or: [
+        { title: { $regex: q, $options: "i" } },
+        { description: { $regex: q, $options: "i" } },
+        { category: { $regex: q, $options: "i" } },
+        { director: { $regex: q, $options: "i" } },
+      ],
+    });
+
+    if (movies.length === 0) {
+      return res.status(404).json({
+        success: false,
+        data: null,
+        message: "No movie found matching your search",
+      });
+    }
+    res.json({
+      success: true,
+      data: movies,
+      message: "Movies fetched successfully",
+    });
+  } catch (error) {
+    console.error("Error searching movies:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to search movies",
+      error: error.message,
+    });
+  }
+};
+
+export { addMovie, getMovies, getMovieById, getMoviesSearch };
