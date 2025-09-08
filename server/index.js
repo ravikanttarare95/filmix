@@ -4,6 +4,7 @@ import cors from "cors"; // CORS middleware to allow cross-origin requests
 import dotenv from "dotenv"; // dotenv to load environment variables from a .env file
 import mongoose from "mongoose"; // Mongoose for connecting and working with MongoDB
 import Movie from "./models/Movie.js";
+import { addMovie, getMovies } from "./controllers/Movies.js";
 
 // Load environment variables from .env file into process.env
 dotenv.config();
@@ -41,47 +42,12 @@ const connectDB = async () => {
 app.get("/", (req, res) => {
   // Respond with JSON indicating the server is working
   res.json({ status: "OK", message: "Server is healthy" });
-  // Converts the provided JavaScript object or array into a JSON string (using JSON.stringify() internally).
+  //res.json() Converts the provided JavaScript object or array into a JSON string (using JSON.stringify() internally).
 });
 
-app.post("/movies", async (req, res) => {
-  const {
-    title,
-    description,
-    images,
-    category,
-    director,
-    releaseYear,
-    rating,
-  } = req.body;
+app.post("/movies", addMovie);
 
-  const newMovie = new Movie({
-    title,
-    description,
-    images,
-    category,
-    director,
-    releaseYear,
-    rating,
-  });
-
-  const savedMovie = await newMovie.save();
-
-  res.json({
-    Status: "OK",
-    data: newMovie,
-    message: "Movie added successfully",
-  });
-});
-
-app.get("/movies", async (req, res) => {
-  const movies = await Movie.find();
-  res.json({
-    success: true,
-    data: movies,
-    message: "Movies fetched successfully",
-  });
-});
+app.get("/movies",getMovies);
 
 const PORT = process.env.PORT || 8080;
 
