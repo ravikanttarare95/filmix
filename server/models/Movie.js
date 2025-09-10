@@ -12,6 +12,10 @@ const movieSchema = new Schema({
   rating: { type: Number },
 });
 
+// A Blueprint (Schema) — describes how a car should be built.
+
+// A Factory (Model) — takes the blueprint and actually builds, delivers, updates, or scraps cars.
+
 const Movie = model("Movie", movieSchema); //model() :- connects the schema to a specific collection in MongoDB.
 // Movie: The model name 
 

@@ -131,4 +131,36 @@ const getMoviesSearch = async (req, res) => {
   }
 };
 
-export { addMovie, getMovies, getMovieById, getMoviesSearch };
+const putMovieById = async (req, res) => {
+  const { id } = req.params;
+  const {
+    title,
+    description,
+    images,
+    category,
+    director,
+    releaseYear,
+    rating,
+  } = req.body;
+  await Movie.updateOne(
+    { _id: id },
+    {
+      title,
+      description,
+      images,
+      category,
+      director,
+      releaseYear,
+      rating,
+    }
+  );
+  const updatedMovie = await Movie.findById(id);
+
+  return res.json({
+    success: true,
+    data: updatedMovie,
+    message: "Movie updated successfully",
+  });
+};
+
+export { addMovie, getMovies, getMovieById, getMoviesSearch, putMovieById };

@@ -9,6 +9,7 @@ import {
   getMovies,
   getMovieById,
   getMoviesSearch,
+  putMovieById,
 } from "./controllers/Movies.js";
 
 // Load environment variables from .env file into process.env
@@ -57,6 +58,8 @@ app.get("/movies/search", getMoviesSearch);
 app.get("/movies", getMovies);
 
 app.get("/movies/:id", getMovieById);
+
+app.put("/movies/:id", putMovieById);
 
 const PORT = process.env.PORT || 8080;
 
