@@ -190,6 +190,16 @@ const updateMovieRatingById = async (req, res) => {
   });
 };
 
+const deleteMovieById = async (req, res) => {
+  const { id } = req.params;
+  await Movie.deleteOne({ _id: id });
+  return res.json({
+    success: true,
+    data: null,
+    message: "Movie deleted successfully.",
+  });
+};
+
 export {
   addMovie,
   getMovies,
@@ -197,4 +207,5 @@ export {
   getMoviesSearch,
   putMovieById,
   updateMovieRatingById,
+  deleteMovieById,
 };
