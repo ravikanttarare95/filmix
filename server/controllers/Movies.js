@@ -163,4 +163,38 @@ const putMovieById = async (req, res) => {
   });
 };
 
-export { addMovie, getMovies, getMovieById, getMoviesSearch, putMovieById };
+const updateMovieRatingById = async (req, res) => {
+  const { id } = req.params;
+  const { rating } = req.body;
+
+  if (rating < 0 || rating > 5) {
+    return res.status(400).json({
+      success: false,
+      data: null,
+      message: "Rating should be between 0 to 5 only.",
+    });
+  }
+  await Movie.updateOne(
+    {
+      _id: id,
+    },
+    { rating }
+  );
+
+  const updatedMovie = await Movie.findById(id);
+
+  return res.json({
+    success: true,
+    data: updatedMovie,
+    message: "Rating updated successfully",
+  });
+};
+
+export {
+  addMovie,
+  getMovies,
+  getMovieById,
+  getMoviesSearch,
+  putMovieById,
+  updateMovieRatingById,
+};
