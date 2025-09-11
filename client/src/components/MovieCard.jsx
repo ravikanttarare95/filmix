@@ -21,7 +21,7 @@ function MovieCard({
       <p className="text-sm">🎬 Directed by: {director}</p>
 
       <img
-        src={images[0]}
+        src={images[1]}
         alt={title}
         className="w-full h-48 object-cover rounded-lg border"
       />

@@ -92,14 +92,6 @@ const getMovieById = async (req, res) => {
 const getMoviesSearch = async (req, res) => {
   try {
     const { q } = req.query;
-    if (!q || q.trim() === "") {
-      return res.status(400).json({
-        success: false,
-        data: null,
-        message: "Please provide a search query",
-      });
-    }
-
     const movies = await Movie.find({
       $or: [
         { title: { $regex: q, $options: "i" } },
@@ -108,6 +100,8 @@ const getMoviesSearch = async (req, res) => {
         { director: { $regex: q, $options: "i" } },
       ],
     });
+
+    //---Important ☝🏻---//
 
     if (movies.length === 0) {
       return res.status(404).json({
