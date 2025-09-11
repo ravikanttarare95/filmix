@@ -25,13 +25,6 @@ function Home() {
           <HomeMovieCard poster={JawaanPoster} title="Jawan" />
         </div>
       </div>
-
-      {/* <img src={JawaanPoster} alt="Movie Poster" className="w-235 mx-auto" />
-      <img
-        src={HomeComingPoster}
-        alt="Movie Poster"
-        className="w-235 mx-auto"
-      /> */}
     </>
   );
 }
