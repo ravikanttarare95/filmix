@@ -3,11 +3,13 @@ import Logo from "./../../public/filmix-logo.png";
 import { NAV_LINKS } from "./../configs/Navbar.js";
 import { Menu, X } from "lucide-react";
 
-function Navbar() {
+function Navbar({ customStyle }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="p-2 flex flex-col sm:flex-row justify-around sm:items-center bg-violet-950 text-white shadow-md sticky w-full z-50">
+    <nav
+      className={`${customStyle} py-2 px-5 flex flex-col sm:flex-row justify-between sm:items-center bg-black text-white shadow-md fixed w-full z-50`}
+    >
       <div className="flex justify-between items-center">
         <img src={Logo} alt="Filmix" className="w-20" />
         <div className="sm:hidden">
@@ -28,7 +30,7 @@ function Navbar() {
           <a
             key={index}
             href={navLinkObj.to}
-            className="text-white hover:text-violet-300 text-lg text-center transition-colors duration-300 font-medium"
+            className="text-white hover:text-violet-300 text-lg text-center transition-colors duration-300 font-medium  "
             onClick={() => setIsOpen(false)}
           >
             {navLinkObj.name}
