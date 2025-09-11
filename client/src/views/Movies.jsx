@@ -13,6 +13,13 @@ function Movies() {
   useEffect(() => {
     loadMovies();
   }, []);
+
+  const deleteMovie = async (id) => {
+    const response = await axio.delete(
+      `${import.meta.env.VITE_API_URL}/movies/${id}`
+    );
+    response && loadMovies();
+  };
   return (
     <div className="flex flex-wrap gap-4 justify-center p-4">
       {movies.map((movieObj, index) => {
@@ -36,7 +43,9 @@ function Movies() {
             images={images}
             rating={rating}
             releaseYear={releaseYear}
-            // onIconClick={deleteMovie}
+            onIconClick={() => {
+              deleteMovie(_id);
+            }}
           />
         );
       })}
