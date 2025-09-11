@@ -7,7 +7,7 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-violet-950 text-white shadow-md fixed w-full z-50">
+    <nav className="bg-violet-950 text-white shadow-md sticky w-full z-50">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <img src={Logo} alt="Filmix" className="w-20 h-auto mr-4" />
 
