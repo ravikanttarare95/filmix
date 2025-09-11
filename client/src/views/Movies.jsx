@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import MovieCard from "./../components/MovieCard";
-
 import { Search as SearchIcon } from "lucide-react";
+import toast, { Toaster } from "react-hot-toast";
 
 function Movies() {
   const [movies, setMovies] = useState([]);
@@ -26,10 +26,12 @@ function Movies() {
   };
 
   const searchMovies = async () => {
+    const loadingToast = toast.loading("Searching...", { id: "searching" });
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/movies/search?q=${search}`
       );
+      toast.dismiss(loadingToast);
 
       if (response) {
         setMovies(response.data.data);
@@ -38,6 +40,8 @@ function Movies() {
     } catch (error) {
       setMovies([]);
       setError(error.response.data.message);
+      toast.error(error.response.data.message, { id: "error" });
+      toast.dismiss(loadingToast);
     }
   };
 
@@ -60,7 +64,8 @@ function Movies() {
         />
         <SearchIcon className="inline-block" />
       </div>
-      <p> 404 Error: {error}</p>
+      {error ? <p> 404 Error: {error}</p> : null}
+
       <div className="flex flex-wrap gap-4 justify-center p-4">
         {movies.map((movieObj, _) => {
           const {
@@ -90,6 +95,7 @@ function Movies() {
           );
         })}
       </div>
+      <Toaster position="top-right" />
     </div>
   );
 }
