@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useParams } from "react-router";
+import StarRating from "./../components/StarRating";
 
 function MovieDetails() {
   const { id } = useParams();
@@ -64,9 +65,10 @@ function MovieDetails() {
         <p>{description}</p>
         <p>{director}</p>
 
-        <p>{rating}</p>
+        <StarRating rating={rating} />
         <p>{releaseYear}</p>
       </div>
+      <Toaster position="top-right" />
     </div>
   );
 }

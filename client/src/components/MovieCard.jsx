@@ -1,6 +1,7 @@
 import React from "react";
 import { OctagonX } from "lucide-react";
 import { Link } from "react-router";
+import StarRating from "./StarRating";
 
 function MovieCard({
   id,
@@ -31,7 +32,7 @@ function MovieCard({
       />
 
       <div className="flex justify-between items-center pt-2">
-        <span className="font-medium">{rating}</span>
+        <StarRating rating={rating} />
         <span className="text-sm">{releaseYear}</span>
       </div>
     </Link>

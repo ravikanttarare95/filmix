@@ -3,6 +3,7 @@ import axios from "axios";
 import MovieCard from "./../components/MovieCard";
 import { Search as SearchIcon } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
+import Navbar from "./../components/Navbar";
 
 function Movies() {
   const [movies, setMovies] = useState([]);
@@ -50,7 +51,8 @@ function Movies() {
   }, [search]);
 
   return (
-    <div>
+    <>
+      <Navbar />
       <div className="shadow rounded-full w-fit py-2 px-5">
         <input
           type="text"
@@ -90,7 +92,9 @@ function Movies() {
               images={images}
               rating={rating}
               releaseYear={releaseYear}
-              onIconClick={() => {
+              onIconClick={(e) => {
+                e.preventDefault();
+
                 deleteMovie(_id);
               }}
             />
@@ -98,7 +102,7 @@ function Movies() {
         })}
       </div>
       <Toaster position="top-right" />
-    </div>
+    </>
   );
 }
 

@@ -8,7 +8,7 @@ function Navbar({ customStyle }) {
 
   return (
     <nav
-      className={`${customStyle} py-2 px-5 flex flex-col sm:flex-row justify-between sm:items-center bg-black text-white shadow-md fixed w-full z-50`}
+      className={`${customStyle} py-2 px-5 flex flex-col sm:flex-row justify-between sm:items-center bg-black text-white shadow-md sticky w-full z-50`}
     >
       <div className="flex justify-between items-center">
         <img src={Logo} alt="Filmix" className="w-20" />

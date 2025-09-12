@@ -8,7 +8,7 @@ import HomeMovieCard from "./../components/HomeMovieCard";
 function Home() {
   return (
     <>
-      <Navbar customStyle={"bg-black/0"} />
+      <Navbar customStyle={"bg-black/0 fixed!"} />
       <div className="relative">
         <img
           src={JawaanPoster}
