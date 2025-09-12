@@ -6,7 +6,7 @@ import StarRating from "./../components/StarRating";
 
 function MovieDetails() {
   const { id } = useParams();
-  const [movie, setMovie] = useState(null);
+  const [movieDetails, setMovieDetails] = useState(null);
   //   Best practice
 
   // For arrays → start with []
@@ -16,14 +16,14 @@ function MovieDetails() {
     const response = await axios.get(
       `${import.meta.env.VITE_API_URL}/movies/${id}`
     );
-    response && setMovie(response.data.data);
+    response && setMovieDetails(response.data.data); 
     toast.dismiss(loadingMovie);
   };
 
   useEffect(() => {
     findMovieDetails();
   }, [id]);
-  if (!movie) return <p>Loading...</p>;
+  if (!movieDetails) return <p>Loading...</p>;
   const {
     title,
     category,
@@ -32,7 +32,7 @@ function MovieDetails() {
     images,
     rating,
     releaseYear,
-  } = movie;
+  } = movieDetails;
   return (
     <div className="flex">
       <div>

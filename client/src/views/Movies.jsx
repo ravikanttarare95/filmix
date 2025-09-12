@@ -23,6 +23,7 @@ function Movies() {
     const response = await axios.delete(
       `${import.meta.env.VITE_API_URL}/movies/${id}`
     );
+    toast.success(response.data.message);
     response && loadMovies();
   };
 
@@ -94,7 +95,6 @@ function Movies() {
               releaseYear={releaseYear}
               onIconClick={(e) => {
                 e.preventDefault();
-
                 deleteMovie(_id);
               }}
             />
