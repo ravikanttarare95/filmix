@@ -65,6 +65,7 @@ function Movies() {
         <SearchIcon className="inline-block" />
       </div>
       {error ? <p> 404 Error: {error}</p> : null}
+      {/* need to design proper 404 page */}
 
       <div className="flex flex-wrap gap-4 justify-center p-4">
         {movies.map((movieObj, _) => {
@@ -81,6 +82,7 @@ function Movies() {
           return (
             <MovieCard
               key={_id}
+              id={_id}
               title={title}
               category={category}
               description={description}

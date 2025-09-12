@@ -1,8 +1,9 @@
 import React from "react";
 import { OctagonX } from "lucide-react";
+import { Link } from "react-router";
 
 function MovieCard({
-  _id,
+  id,
   title,
   category,
   description,
@@ -13,7 +14,10 @@ function MovieCard({
   onIconClick,
 }) {
   return (
-    <div className="p-4 border rounded-2xl shadow-md space-y-2 w-60">
+    <Link
+      to={`/movie_details/${id}`}
+      className="p-4 border rounded-2xl shadow-md space-y-2 w-60"
+    >
       <OctagonX onClick={onIconClick} />
       <h2 className="text-xl font-semibold">{title}</h2>
       <p className="text-sm italic">{category}</p>
@@ -30,7 +34,7 @@ function MovieCard({
         <span className="font-medium">{rating}</span>
         <span className="text-sm">{releaseYear}</span>
       </div>
-    </div>
+    </Link>
   );
 }
 
