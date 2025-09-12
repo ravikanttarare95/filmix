@@ -16,7 +16,7 @@ function MovieDetails() {
     const response = await axios.get(
       `${import.meta.env.VITE_API_URL}/movies/${id}`
     );
-    response && setMovieDetails(response.data.data); 
+    response && setMovieDetails(response.data.data);
     toast.dismiss(loadingMovie);
   };
 
@@ -45,7 +45,7 @@ function MovieDetails() {
             />
             <div className="flex gap-5 justify-center absolute bottom-2 right-0 left-0">
               {" "}
-              {images.map((imgUrl, index) => {
+              {images.slice(0, 3).map((imgUrl, index) => {
                 return (
                   <img
                     key={index}

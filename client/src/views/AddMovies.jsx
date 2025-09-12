@@ -16,15 +16,15 @@ function AddMovies() {
     releaseYear: "",
     rating: 0,
   });
-  const [photos, setPhotos] = useState([]);
+  const [newImages, setNewImages] = useState([]);
 
   const handleAddMovie = async (e) => {
     const response = await axios.post(
       `${import.meta.env.VITE_API_URL}/movies`,
       movieDetail
     );
+    toast.success(response.data.message);
     setTimeout(() => {
-      toast.success(response.data.message);
       navigate("/movies");
     }, 1000);
   };
@@ -37,7 +37,7 @@ function AddMovies() {
           name="movie-title"
           id="movie-title"
           placeholder="Movie Title:"
-          value={movieDetail.title}
+          value={movieDetail?.title}
           onInputChange={(e) => {
             setMovieDetail({ ...movieDetail, title: e.target.value });
           }}
@@ -48,19 +48,23 @@ function AddMovies() {
           id="movie-desc"
           placeholder="Movie Description..."
           className="shadow"
-          value={movieDetail.description}
+          value={movieDetail?.description}
           onChange={(e) => {
             setMovieDetail({ ...movieDetail, description: e.target.value });
           }}
         ></textarea>
-        {/* {photos.length !== 0 && (
-          <div>
-            {" "}
-            {photos.map(({ imageUrl, index }) => {
+
+        {movieDetail.images.length !== 0 && (
+          <div className="flex gap-5">
+            {movieDetail.images.map((imageUrl, index) => {
               return (
-                <div key={imageUrl}>
-                  {" "}
-                  <img src={imageUrl} alt={"Movie Poster"} key={index} />
+                <div key={index}>
+                  <img
+                    src={imageUrl}
+                    alt={"Movie Poster"}
+                    key={index}
+                    className="w-20"
+                  />
                 </div>
               );
             })}
@@ -74,24 +78,25 @@ function AddMovies() {
           placeholder="Image url"
           value={movieDetail?.images}
           onInputChange={(e) => {
+            setNewImages(e.target.value);
+          }}
+        />
+
+        <MdAddPhotoAlternate
+          onClick={() => {
             setMovieDetail({
               ...movieDetail,
-              images: [...movieDetail.images, e.target.value],
+              images: [...movieDetail.images, newImages],
             });
           }}
-        /> */}
+        />
 
-        {/* <MdAddPhotoAlternate
-          onClick={() => {
-            setMovieDetail(setPhotos(movieDetail.images));
-          }}
-        /> */}
         <Input
           type="text"
           name="movie-category"
           id="movie-category"
           placeholder="Movie Category"
-          value={movieDetail.category}
+          value={movieDetail?.category}
           onInputChange={(e) => {
             setMovieDetail({ ...movieDetail, category: e.target.value });
           }}
@@ -102,7 +107,7 @@ function AddMovies() {
           name="director-name"
           id="director-name"
           placeholder="Director Name"
-          value={movieDetail.director}
+          value={movieDetail?.director}
           onInputChange={(e) => {
             setMovieDetail({ ...movieDetail, director: e.target.value });
           }}
@@ -112,8 +117,8 @@ function AddMovies() {
           id="release-year"
           name="release-year"
           placeholder=""
-          value={movieDetail.releaseYear}
-          onInputChange={() => {
+          value={movieDetail?.releaseYear}
+          onInputChange={(e) => {
             setMovieDetail({ ...movieDetail, releaseYear: e.target.value });
           }}
         />
@@ -122,9 +127,9 @@ function AddMovies() {
           id="rating"
           name="rating"
           placeholder="Movie Rating"
-          value={movieDetail.rating}
+          value={movieDetail?.rating}
           i
-          onInputChange={() => {
+          onInputChange={(e) => {
             setMovieDetail({ ...movieDetail, rating: e.target.value });
           }}
         />
