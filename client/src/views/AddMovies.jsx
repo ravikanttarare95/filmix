@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { MdAddPhotoAlternate } from "react-icons/md";
+import Navbar from "./../components/Navbar";
+import { TbLibraryPlus } from "react-icons/tb";
 import { X } from "lucide-react";
 import Input from "./../components/Input";
 import axios from "axios";
@@ -124,169 +125,185 @@ function AddMovies() {
   }, [movieDetail]);
 
   return (
-    <div className="max-w-150 mx-auto">
-      {" "}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleAddMovie();
-        }}
-        className="flex flex-col gap-5"
-      >
-        <Input
-          type="text"
-          name="movie-title"
-          id="movie-title"
-          placeholder="Movie Title:"
-          value={movieDetail?.title}
-          onInputChange={(e) => {
-            setMovieDetail({ ...movieDetail, title: e.target.value });
-          }}
-        />
-        {errorTitle && <p className="text-red-500 text-sm">{errorTitle}</p>}
-
-        <textarea
-          name="movie-desc"
-          id="movie-desc"
-          placeholder="Movie Description..."
-          className="shadow"
-          value={movieDetail?.description}
-          onChange={(e) => {
-            setMovieDetail({ ...movieDetail, description: e.target.value });
-          }}
-        ></textarea>
-        {errorDescription && (
-          <p className="text-red-500 text-sm">{errorDescription}</p>
-        )}
-
-        {movieDetail.images.length !== 0 && (
-          <div className="flex gap-5">
-            {movieDetail.images.map((imageUrl, index) => {
-              return (
-                <div key={index} className="relative">
-                  <X
-                    className="absolute text-red-500 bg-white/50 cursor-pointer"
-                    size={15}
-                    onClick={() => {
-                      setMovieDetail({
-                        ...movieDetail,
-                        images: movieDetail.images.filter(
-                          (_, idx) => index !== idx
-                        ),
-                      });
-                    }}
-                  />
-                  <img
-                    src={imageUrl}
-                    alt={"Movie Poster"}
-                    key={index}
-                    className="w-20"
-                  />
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        <Input
-          type="text"
-          name="images-url"
-          id="images-url"
-          placeholder="Image url"
-          value={newImages}
-          onInputChange={(e) => {
-            setNewImages(e.target.value);
-          }}
-        />
-        {errorImages && <p className="text-red-500 text-sm">{errorImages}</p>}
-
-        <MdAddPhotoAlternate
-          onClick={() => {
-            if (newImages.length === 0) {
-              return toast.error("Please add proper image URL");
-            }
-
-            setMovieDetail({
-              ...movieDetail,
-              images: [...movieDetail.images, newImages],
-            });
-            setNewImages("");
-            setErrorImages("");
-          }}
-          className="cursor-pointer"
-        />
-
-        <Input
-          type="text"
-          name="movie-category"
-          id="movie-category"
-          placeholder="Movie Category"
-          value={movieDetail?.category}
-          onInputChange={(e) => {
-            setMovieDetail({ ...movieDetail, category: e.target.value });
-          }}
-        />
-        {errorCategory && (
-          <p className="text-red-500 text-sm">{errorCategory}</p>
-        )}
-
-        <Input
-          type="text"
-          name="director-name"
-          id="director-name"
-          placeholder="Director Name"
-          value={movieDetail?.director}
-          onInputChange={(e) => {
-            setMovieDetail({ ...movieDetail, director: e.target.value });
-          }}
-        />
-        {errorDirector && (
-          <p className="text-red-500 text-sm">{errorDirector}</p>
-        )}
-        <div className="flex gap-5">
-          <div className="flex flex-col w-full">
-            <p>Realese Year:</p>
+    <>
+      <Navbar />
+      <div className="max-w-3xl  mx-auto p-6 my-5 bg-white rounded-xl shadow-lg">
+        <h2 className="text-2xl font-bold text-gray-800 border-b-2 border-red-500 pb-2 mb-2">
+          🎬 Add a New Movie
+        </h2>{" "}
+        <div className="h-100  overflow-auto">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleAddMovie();
+            }}
+            className="flex flex-col gap-5"
+          >
             <Input
-              type="number"
-              id="release-year"
-              name="release-year"
-              placeholder=""
-              value={movieDetail?.releaseYear}
-              min={1888}
-              max={new Date().getFullYear()}
+              type="text"
+              name="movie-title"
+              id="movie-title"
+              placeholder="Movie Title:"
+              value={movieDetail?.title}
               onInputChange={(e) => {
-                setMovieDetail({ ...movieDetail, releaseYear: e.target.value });
+                setMovieDetail({ ...movieDetail, title: e.target.value });
               }}
             />
-            {errorReleaseYear && (
-              <p className="text-red-500 text-sm">{errorReleaseYear}</p>
+            {errorTitle && <p className="text-red-500 text-sm">{errorTitle}</p>}
+
+            <textarea
+              name="movie-desc"
+              id="movie-desc"
+              placeholder="Movie Description..."
+              className="w-full p-3 rounded-md  bg-gradient-to-br from-gray-800 to-gray-700 text-white placeholder-gray-400
+                 border border-gray-700 
+                 focus:border-red-500 focus:ring-1 focus:ring-yellow-400
+                 outline-none transition duration-300"
+              value={movieDetail?.description}
+              onChange={(e) =>
+                setMovieDetail({ ...movieDetail, description: e.target.value })
+              }
+            ></textarea>
+            {errorDescription && (
+              <p className="text-red-500 text-sm">{errorDescription}</p>
             )}
-          </div>
-          <div className="flex flex-col w-full">
-            <p>Ratings:</p>
+
+            {movieDetail.images.length !== 0 && (
+              <div className="flex gap-5 flex-wrap">
+                {movieDetail.images.map((imageUrl, index) => (
+                  <div key={index} className="relative">
+                    <X
+                      className="absolute -top-2 -right-2 text-white bg-red-500 p-1 rounded-full cursor-pointer shadow-md"
+                      size={18}
+                      onClick={() => {
+                        setMovieDetail({
+                          ...movieDetail,
+                          images: movieDetail.images.filter(
+                            (_, idx) => index !== idx
+                          ),
+                        });
+                      }}
+                    />
+                    <img
+                      src={imageUrl}
+                      alt={"Movie Poster"}
+                      className="w-24 h-28 object-cover rounded-md shadow"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="relative">
+              <Input
+                type="text"
+                name="images-url"
+                id="images-url"
+                placeholder="Image url"
+                value={newImages}
+                onInputChange={(e) => {
+                  setNewImages(e.target.value);
+                }}
+              />
+              <TbLibraryPlus
+                onClick={() => {
+                  if (newImages.length === 0) {
+                    return toast.error("Please add proper image URL");
+                  }
+
+                  setMovieDetail({
+                    ...movieDetail,
+                    images: [...movieDetail.images, newImages],
+                  });
+                  setNewImages("");
+                  setErrorImages("");
+                }}
+                className="cursor-pointer text-yellow-300 hover:text-yellow-400 
+               absolute right-3 top-1/2 -translate-y-1/2 
+               text-2xl transition duration-300"
+              />
+            </div>
+
+            {errorImages && (
+              <p className="text-red-500 text-sm">{errorImages}</p>
+            )}
+
             <Input
-              type="number"
-              id="rating"
-              name="rating"
-              min={0}
-              max={5}
-              placeholder="Movie Rating"
-              value={movieDetail?.rating}
+              type="text"
+              name="movie-category"
+              id="movie-category"
+              placeholder="Movie Category"
+              value={movieDetail?.category}
               onInputChange={(e) => {
-                setMovieDetail({ ...movieDetail, rating: e.target.value });
+                setMovieDetail({ ...movieDetail, category: e.target.value });
               }}
             />
-
-            {errorRating && (
-              <p className="text-red-500 text-sm">{errorRating}</p>
+            {errorCategory && (
+              <p className="text-red-500 text-sm">{errorCategory}</p>
             )}
-          </div>
+
+            <Input
+              type="text"
+              name="director-name"
+              id="director-name"
+              placeholder="Director Name"
+              value={movieDetail?.director}
+              onInputChange={(e) => {
+                setMovieDetail({ ...movieDetail, director: e.target.value });
+              }}
+            />
+            {errorDirector && (
+              <p className="text-red-500 text-sm">{errorDirector}</p>
+            )}
+            <div className="flex gap-5">
+              <div className="flex flex-col w-full">
+                <p className="text-black pb-1">Realese Year:</p>
+                <Input
+                  type="number"
+                  id="release-year"
+                  name="release-year"
+                  placeholder=""
+                  value={movieDetail?.releaseYear}
+                  min={1888}
+                  max={new Date().getFullYear()}
+                  onInputChange={(e) => {
+                    setMovieDetail({
+                      ...movieDetail,
+                      releaseYear: e.target.value,
+                    });
+                  }}
+                />
+                {errorReleaseYear && (
+                  <p className="text-red-500 text-sm">{errorReleaseYear}</p>
+                )}
+              </div>
+              <div className="flex flex-col w-full">
+                <p className="text-black pb-1">Ratings:</p>
+                <Input
+                  type="number"
+                  id="rating"
+                  name="rating"
+                  min={0}
+                  max={5}
+                  placeholder="Movie Rating"
+                  value={movieDetail?.rating}
+                  onInputChange={(e) => {
+                    setMovieDetail({ ...movieDetail, rating: e.target.value });
+                  }}
+                />
+
+                {errorRating && (
+                  <p className="text-red-500 text-sm">{errorRating}</p>
+                )}
+              </div>
+            </div>
+
+            <Button type="submit" btnTitle=" Add Movie" />
+          </form>
         </div>
-
-        <Button type="submit" btnTitle=" Add Movie" />
-      </form>
+      </div>
       <Toaster position="top-right" />
-    </div>
+    </>
   );
 }
 

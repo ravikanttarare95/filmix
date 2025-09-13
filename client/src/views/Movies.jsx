@@ -54,53 +54,56 @@ function Movies() {
   return (
     <>
       <Navbar />
-      <div className="shadow rounded-full w-fit py-2 px-5">
-        <input
-          type="text"
-          id="seach-bar"
-          placeholder="Search Movies... "
-          className="outline-none"
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-          }}
-        />
-        <SearchIcon className="inline-block" />
-      </div>
-      {error ? <p> 404 Error: {error}</p> : null}
-      {/* need to design proper 404 page */}
+      <div className="p-6">
+        <div className="sticky xl:top-16 top-27 z-50 flex items-center shadow-md rounded-full w-full md:w-1/2 mx-auto bg-gray-100 px-5 py-2 mb-15">
+          <input
+            type="text"
+            id="seach-bar"
+            placeholder="Search Movies..."
+            className="outline-none flex-1 bg-transparent text-gray-800 placeholder-gray-500"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <SearchIcon className="text-red-500" />
+        </div>
 
-      <div className="flex flex-wrap gap-4 justify-center p-4">
-        {movies.map((movieObj, _) => {
-          const {
-            _id,
-            title,
-            category,
-            description,
-            director,
-            images,
-            rating,
-            releaseYear,
-          } = movieObj;
-          return (
-            <MovieCard
-              key={_id}
-              id={_id}
-              title={title}
-              category={category}
-              description={description}
-              director={director}
-              images={images}
-              rating={rating}
-              releaseYear={releaseYear}
-              onIconClick={(e) => {
-                e.preventDefault();
-                deleteMovie(_id);
-              }}
-            />
-          );
-        })}
-      </div>
+        {error ? (
+          <p className="text-center text-red-500 font-medium">{error}</p>
+        ) : null}
+        {/* need to design proper 404 page */}
+
+        <div className="flex flex-wrap gap-10 max-w-6xl mx-auto justify-center">
+          {movies.map((movieObj, _) => {
+            const {
+              _id,
+              title,
+              category,
+              description,
+              director,
+              images,
+              rating,
+              releaseYear,
+            } = movieObj;
+            return (
+              <MovieCard
+                key={_id}
+                id={_id}
+                title={title}
+                category={category}
+                description={description}
+                director={director}
+                images={images}
+                rating={rating}
+                releaseYear={releaseYear}
+                onIconClick={(e) => {
+                  e.preventDefault();
+                  deleteMovie(_id);
+                }}
+              />
+            );
+          })}
+        </div>
+      </div>{" "}
       <Toaster position="top-right" />
     </>
   );
