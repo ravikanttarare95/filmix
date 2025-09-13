@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MdAddPhotoAlternate } from "react-icons/md";
+import { X } from "lucide-react";
 import Input from "./../components/Input";
 import axios from "axios";
 import { useNavigate } from "react-router";
@@ -94,7 +95,19 @@ function AddMovies() {
           <div className="flex gap-5">
             {movieDetail.images.map((imageUrl, index) => {
               return (
-                <div key={index}>
+                <div key={index} className="relative">
+                  <X
+                    className="absolute text-red-500 bg-white/50 cursor-pointer"
+                    size={15}
+                    onClick={() => {
+                      setMovieDetail({
+                        ...movieDetail,
+                        images: movieDetail.images.filter(
+                          (_, idx) => index !== idx
+                        ),
+                      });
+                    }}
+                  />
                   <img
                     src={imageUrl}
                     alt={"Movie Poster"}
@@ -112,7 +125,7 @@ function AddMovies() {
           name="images-url"
           id="images-url"
           placeholder="Image url"
-          value={movieDetail?.images}
+          value={newImages}
           onInputChange={(e) => {
             setNewImages(e.target.value);
           }}
@@ -124,7 +137,9 @@ function AddMovies() {
               ...movieDetail,
               images: [...movieDetail.images, newImages],
             });
+            setNewImages([]);
           }}
+          className="cursor-pointer"
         />
 
         <Input
