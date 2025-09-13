@@ -1,8 +1,8 @@
 import React from "react";
 
-function HomeMovieCard({ poster, title }) {
+function HomeMovieCard({ poster, title, onClick }) {
   return (
-    <div className="w-23 sm:w-40 relative">
+    <div className="w-23 sm:w-40 relative" onClick={onClick}>
       <img
         src={poster}
         alt="Movie Poster"

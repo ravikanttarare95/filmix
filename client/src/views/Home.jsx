@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "./../components/Navbar";
 import JawaanPoster from "./../assets/home-images/jawaan-movie.png";
 import EndGamePoster from "./../assets/home-images/avengers-endgame.jpg";
@@ -6,12 +6,13 @@ import HomeComingPoster from "./../assets/home-images/spider-man-homecoming.jpg"
 import HomeMovieCard from "./../components/HomeMovieCard";
 
 function Home() {
+  const [homeWallpaper, setHomeWallpaper] = useState(EndGamePoster);
   return (
     <>
       <Navbar customStyle="bg-black/0 fixed! shadow-none backdrop-blur-none!" />
       <div className="relative h-screen w-full">
         <img
-          src={EndGamePoster}
+          src={homeWallpaper}
           alt="Movie Poster"
           className="w-full h-screen object-cover"
         />
@@ -31,12 +32,27 @@ function Home() {
 
         {/* Featured Movie Cards */}
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex gap-3 sm:gap-6 md:gap-10 justify-center">
-          <HomeMovieCard poster={EndGamePoster} title="Avengers: Endgame" />
+          <HomeMovieCard
+            poster={EndGamePoster}
+            title="Avengers: Endgame"
+            onClick={() => {
+              setHomeWallpaper(EndGamePoster);
+            }}
+          />
           <HomeMovieCard
             poster={HomeComingPoster}
             title="Spider-Man: Homecoming"
+            onClick={() => {
+              setHomeWallpaper(HomeComingPoster);
+            }}
           />
-          <HomeMovieCard poster={JawaanPoster} title="Jawan" />
+          <HomeMovieCard
+            poster={JawaanPoster}
+            title="Jawan"
+            onClick={() => {
+              setHomeWallpaper(JawaanPoster);
+            }}
+          />
         </div>
       </div>
     </>
