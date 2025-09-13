@@ -20,7 +20,7 @@ function Home() {
 
         {/* Hero Text */}
         <div className="absolute top-1/3 left-8 z-20 max-w-lg">
-          <h1 className="text-4xl md:text-6xl font-extrabold text-white drop-shadow mb-4">
+          <h1 className="text-5xl md:text-6xl font-extrabold text-white drop-shadow mb-4">
             Welcome to <span className="text-red-500">Filmix</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-200">
@@ -31,7 +31,7 @@ function Home() {
         </div>
 
         {/* Featured Movie Cards */}
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex gap-3 sm:gap-6 md:gap-10 justify-center">
+        <div className="absolute bottom-20 sm:bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex gap-3 sm:gap-6 md:gap-10 justify-center">
           <HomeMovieCard
             poster={EndGamePoster}
             title="Avengers: Endgame"

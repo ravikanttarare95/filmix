@@ -4,6 +4,7 @@ import MovieCard from "./../components/MovieCard";
 import { Search as SearchIcon } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import Navbar from "./../components/Navbar";
+import NotFoundPage from "./NotFoundPage";
 
 function Movies() {
   const [movies, setMovies] = useState([]);
@@ -67,9 +68,7 @@ function Movies() {
           <SearchIcon className="text-red-500" />
         </div>
 
-        {error ? (
-          <p className="text-center text-red-500 font-medium">{error}</p>
-        ) : null}
+        {error ? <NotFoundPage /> : null}
         {/* need to design proper 404 page */}
 
         <div className="flex flex-wrap gap-10 max-w-6xl mx-auto justify-center">

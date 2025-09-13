@@ -9,7 +9,7 @@ function Navbar({ customStyle }) {
 
   return (
     <nav
-      className={`${customStyle} py-1 backdrop-blur-2xl px-6 flex flex-col sm:flex-row justify-between sm:items-center  sticky top-0 w-full z-50`}
+      className={`${customStyle} py-1 backdrop-blur-2xl px-6 flex flex-col sm:flex-row justify-between sm:items-center  sticky top-0 w-full z-51`}
     >
       {/* Logo + Menu Toggle */}
       <div className="flex justify-between items-center w-full sm:w-auto">
