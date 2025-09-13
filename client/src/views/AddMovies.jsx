@@ -5,6 +5,7 @@ import Input from "./../components/Input";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import toast, { Toaster } from "react-hot-toast";
+import Button from "./../components/Button";
 
 function AddMovies() {
   const navigate = useNavigate();
@@ -184,16 +185,14 @@ function AddMovies() {
           }}
         />
 
-        <button
+        <Button
           type="submit"
-          className="cursor-pointer shadow-md shadow-black w-fit"
-          onClick={(e) => {
+          btnTitle=" Add Movie"
+          onBtnClick={(e) => {
             e.preventDefault();
             handleAddMovie();
           }}
-        >
-          Add Movie
-        </button>
+        />
       </form>
       <Toaster position="top-right" />
     </div>
