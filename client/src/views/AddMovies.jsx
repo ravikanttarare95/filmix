@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdAddPhotoAlternate } from "react-icons/md";
 import Input from "./../components/Input";
 import axios from "axios";
@@ -17,17 +17,49 @@ function AddMovies() {
     rating: 0,
   });
   const [newImages, setNewImages] = useState([]);
+  const [error, setError] = useState({
+    title: "",
+    description: "",
+    images: "",
+    category: "",
+    director: "",
+    releaseYear: "",
+    rating: "",
+  });
 
   const handleAddMovie = async (e) => {
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/movies`,
-      movieDetail
-    );
-    toast.success(response.data.message);
-    setTimeout(() => {
-      navigate("/movies");
-    }, 1000);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/movies`,
+        movieDetail
+      );
+      toast.success(response.data.message);
+      setTimeout(() => {
+        navigate("/movies");
+      }, 1000);
+    } catch (error) {}
   };
+
+  useEffect(() => {
+    if (!movieDetail.title) {
+      setError({ ...error, title: "" });
+    } else if (movieDetail.title.length < 3) {
+      setError({
+        ...error,
+        title: "Movie title must be at least 2 characters",
+      });
+    }
+
+    if (!movieDetail.description) {
+      setError({ ...error, description: "" });
+    } else if (movieDetail.description.length < 10) {
+      setError({
+        ...error,
+        description: "Description must be at least 10 characters",
+      });
+    }
+  }, [movieDetail]);
+
   return (
     <div className="max-w-150 mx-auto">
       {" "}
@@ -42,6 +74,7 @@ function AddMovies() {
             setMovieDetail({ ...movieDetail, title: e.target.value });
           }}
         />
+        {error.title && <p className="text-red-500 text-sm">{error.title}</p>}
 
         <textarea
           name="movie-desc"
@@ -53,6 +86,9 @@ function AddMovies() {
             setMovieDetail({ ...movieDetail, description: e.target.value });
           }}
         ></textarea>
+        {error.description && (
+          <p className="text-red-500 text-sm">{error.description}</p>
+        )}
 
         {movieDetail.images.length !== 0 && (
           <div className="flex gap-5">
@@ -128,7 +164,6 @@ function AddMovies() {
           name="rating"
           placeholder="Movie Rating"
           value={movieDetail?.rating}
-          i
           onInputChange={(e) => {
             setMovieDetail({ ...movieDetail, rating: e.target.value });
           }}

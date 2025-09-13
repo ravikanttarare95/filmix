@@ -22,7 +22,7 @@ function MovieCard({
       <OctagonX onClick={onIconClick} />
       <h2 className="text-xl font-semibold">{title}</h2>
       <p className="text-sm italic">{category}</p>
-      <p className="text-base">{description}</p>
+      <p className="text-base truncate">{description}</p>
       <p className="text-sm">🎬 Directed by: {director}</p>
 
       <img
