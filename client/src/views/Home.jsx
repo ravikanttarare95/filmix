@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import Navbar from "./../components/Navbar";
 import JawaanPoster from "./../assets/home-images/jawaan-movie.png";
 import EndGamePoster from "./../assets/home-images/avengers-endgame.jpg";
-import HomeComingPoster from "./../assets/home-images/spider-man-homecoming.jpg";
+import HomeComingPoster from "./../assets/home-images/spider-man-homecoming.png";
 import HomeMovieCard from "./../components/HomeMovieCard";
+import Button from "./../components/Button";
 
 function Home() {
   const [homeWallpaper, setHomeWallpaper] = useState(EndGamePoster);
+  const navigate = useNavigate();
   return (
     <>
       <Navbar customStyle="bg-black/0 fixed! shadow-none backdrop-blur-none!" />
@@ -21,13 +24,22 @@ function Home() {
         {/* Hero Text */}
         <div className="absolute top-1/3 left-8 z-20 max-w-lg">
           <h1 className="text-5xl md:text-6xl font-extrabold text-white drop-shadow mb-4">
-            Welcome to <span className="text-red-500">Filmix</span>
+            Welcome to{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-br from-yellow-500 to-red-500 ">
+              Filmix
+            </span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-200">
+          <p className="text-lg md:text-xl text-gray-200 mb-5">
             Discover, rate, and explore your favorite movies in a{" "}
             <span className="text-yellow-400 font-semibold">modern</span>,
             vibrant interface.
           </p>
+          <Button
+            btnTitle={"Browse Movies"}
+            onBtnClick={() => {
+              navigate("/movies");
+            }}
+          />
         </div>
 
         {/* Featured Movie Cards */}

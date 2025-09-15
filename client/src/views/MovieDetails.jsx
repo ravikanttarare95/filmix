@@ -7,6 +7,7 @@ import StarRating from "./../components/StarRating";
 function MovieDetails() {
   const { id } = useParams();
   const [movieDetails, setMovieDetails] = useState(null);
+  const [imageIndex, setImageIndex] = useState(0);
 
   const findMovieDetails = async () => {
     const loadingMovie = toast.loading("Loading Movie Details...");
@@ -49,19 +50,22 @@ function MovieDetails() {
           {images && (
             <div className="relative rounded-lg overflow-hidden shadow-lg">
               <img
-                src={images[0]}
+                src={images[imageIndex]}
                 alt={title}
-                className="w-full h-[400px] object-cover rounded-lg"
+                className="w-full h-[400px] object-cover rounded-lg border border-gray-600"
               />
 
               {/* Thumbnail Gallery */}
-              <div className="grid grid-cols-3 gap-3 mt-4">
-                {images.slice(0, 3).map((imgUrl, index) => (
+              <div className="grid grid-cols-4 justify-items-center gap-3 mt-4">
+                {images.slice(0, 4).map((imgUrl, index) => (
                   <img
-                    key={index}
+                    key={imgUrl}
                     src={imgUrl}
                     alt={`${title}-thumb-${index}`}
-                    className="h-28 object-cover rounded-md border border-gray-700 hover:scale-105 transition"
+                    className="h-28 object-cover rounded-md border border-gray-600 hover:scale-105 transition cursor-pointer"
+                    onClick={() => {
+                      setImageIndex(index);
+                    }}
                   />
                 ))}
               </div>
@@ -87,6 +91,7 @@ function MovieDetails() {
           <div className="flex items-center gap-3">
             <StarRating
               rating={rating}
+              size={"lg"}
               onStarClick={(newRating) => changeRating(newRating)}
             />
           </div>
