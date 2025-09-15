@@ -14,14 +14,17 @@ function Movies() {
   const loadMovies = async () => {
     const response = await axios.get(`${import.meta.env.VITE_API_URL}/movies`); //-- Important--//
     setMovies(response.data.data);
-    console.log(response)
+    console.log(response);
   };
 
   useEffect(() => {
     loadMovies();
   }, []);
 
-  const deleteMovie = async (id) => {
+  const deleteMovie = async (id, index) => {
+    if (index < 12) {
+      return toast.error("⚠️ Default movies cannot be deleted!");
+    }
     const response = await axios.delete(
       `${import.meta.env.VITE_API_URL}/movies/${id}`
     );
@@ -70,10 +73,9 @@ function Movies() {
         </div>
 
         {error ? <NotFoundPage /> : null}
-        {/* need to design proper 404 page */}
 
         <div className="flex flex-wrap gap-10 max-w-6xl mx-auto justify-center">
-          {movies.map((movieObj, _) => {
+          {movies.map((movieObj, index) => {
             const {
               _id,
               title,
@@ -97,7 +99,7 @@ function Movies() {
                 releaseYear={releaseYear}
                 onIconClick={(e) => {
                   e.preventDefault();
-                  deleteMovie(_id);
+                  deleteMovie(_id, index);
                 }}
               />
             );
