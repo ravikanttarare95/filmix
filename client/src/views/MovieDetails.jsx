@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useParams } from "react-router";
 import StarRating from "./../components/StarRating";
+import { RiEditBoxFill } from "react-icons/ri";
 
 function MovieDetails() {
   const { id } = useParams();
@@ -42,7 +43,7 @@ function MovieDetails() {
   } = movieDetails;
 
   return (
-    <div className="max-w-7xl mx-auto p-4 md:p-8 text-white">
+    <div className="max-w-7xl mx-auto p-4 md:p-8 text-white min-h-screen flex justify-center items-center">
       {/* Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Left Side - Poster & Gallery */}
@@ -74,7 +75,12 @@ function MovieDetails() {
         </div>
 
         {/* Right Side - Details */}
-        <div className="bg-gradient-to-br from-gray-900 to-gray-800 p-6 rounded-lg shadow-lg space-y-4">
+        <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 p-6 rounded-lg shadow-lg space-y-4">
+          <div className="absolute top-5 right-5 flex items-center gap-2 px-0 sm:px-3 py-0 sm:py-1.5 rounded-xs sm:rounded-full bg-gray-800 hover:bg-gray-700 transition-shadow shadow-md hover:shadow-lg cursor-pointer border border-gray-600 text-white text-sm font-medium">
+            <RiEditBoxFill className="h-5 w-5 sm:h-4 sm:w-4" />
+            <span className="hidden sm:inline-block">Edit</span>
+          </div>
+
           <h2 className="text-2xl md:text-3xl font-bold text-red-400">
             {title}
           </h2>
