@@ -19,6 +19,7 @@ function AddMovies() {
     director: "",
     releaseYear: "",
     rating: 0,
+    isDefault: false,
   });
   const [newImages, setNewImages] = useState("");
   const [errorTitle, setErrorTitle] = useState("");
@@ -85,6 +86,8 @@ function AddMovies() {
       setErrorDescription("");
     } else if (movieDetail.description.length < 10) {
       setErrorDescription("Description must be at least 10 characters");
+    } else if (movieDetail.description.length > 500) {
+      setErrorDescription("Description cannot be more than 500 characters");
     } else {
       setErrorDescription("");
     }

@@ -40,6 +40,7 @@ const movieSchema = new Schema(
       min: [0],
       max: [5],
     },
+    isDefault: { type: Boolean },
   },
   { timestamps: true } // ✅ auto adds createdAt & updatedAt
 );

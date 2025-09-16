@@ -32,6 +32,7 @@ function EditMovies() {
     director: "",
     releaseYear: "",
     rating: 0,
+    isDefault: false,
   });
   const [newImages, setNewImages] = useState("");
   const [errorTitle, setErrorTitle] = useState("");
@@ -98,6 +99,8 @@ function EditMovies() {
       setErrorDescription("");
     } else if (movieDetail.description.length < 10) {
       setErrorDescription("Description must be at least 10 characters");
+    } else if (movieDetail.description.length > 500) {
+      setErrorDescription("Description cannot be more than 500 characters");
     } else {
       setErrorDescription("");
     }
@@ -153,34 +156,43 @@ function EditMovies() {
             }}
             className="flex flex-col gap-5"
           >
-            <Input
-              type="text"
-              name="movie-title"
-              id="movie-title"
-              placeholder="Movie Title:"
-              value={movieDetail?.title}
-              onInputChange={(e) => {
-                setMovieDetail({ ...movieDetail, title: e.target.value });
-              }}
-            />
-            {errorTitle && <p className="text-red-500 text-sm">{errorTitle}</p>}
+            <div>
+              <Input
+                type="text"
+                name="movie-title"
+                id="movie-title"
+                placeholder="Movie Title:"
+                value={movieDetail?.title}
+                onInputChange={(e) => {
+                  setMovieDetail({ ...movieDetail, title: e.target.value });
+                }}
+              />
+              {errorTitle && (
+                <p className="text-red-500 text-sm">{errorTitle}</p>
+              )}
+            </div>
 
-            <textarea
-              name="movie-desc"
-              id="movie-desc"
-              placeholder="Movie Description..."
-              className="w-full h-30 p-3 rounded-md  bg-gradient-to-br from-gray-800 to-gray-700 text-white placeholder-gray-400
+            <div>
+              <textarea
+                name="movie-desc"
+                id="movie-desc"
+                placeholder="Movie Description..."
+                className="w-full h-30 p-3 rounded-md  bg-gradient-to-br from-gray-800 to-gray-700 text-white placeholder-gray-400
                  border border-gray-700 
                  focus:border-red-500 focus:ring-1 focus:ring-yellow-400
                  outline-none transition duration-300"
-              value={movieDetail?.description}
-              onChange={(e) =>
-                setMovieDetail({ ...movieDetail, description: e.target.value })
-              }
-            ></textarea>
-            {errorDescription && (
-              <p className="text-red-500 text-sm">{errorDescription}</p>
-            )}
+                value={movieDetail?.description}
+                onChange={(e) =>
+                  setMovieDetail({
+                    ...movieDetail,
+                    description: e.target.value,
+                  })
+                }
+              ></textarea>
+              {errorDescription && (
+                <p className="text-red-500 text-sm">{errorDescription}</p>
+              )}
+            </div>
 
             {movieDetail.images.length !== 0 && (
               <div className="flex gap-5 flex-wrap">
@@ -190,10 +202,11 @@ function EditMovies() {
                       className="absolute -top-2 -right-2 text-white bg-red-500 p-1 rounded-full cursor-pointer shadow-md"
                       size={18}
                       onClick={() => {
-                        if (index < 4)
+                        if (movieDetail.isDefault)
                           return toast.error(
-                            "⚠️ Default movie images cannot be deleted!"
+                            "⚠️ Default movie's images cannot be deleted!"
                           );
+
                         setMovieDetail({
                           ...movieDetail,
                           images: movieDetail.images.filter(
@@ -240,39 +253,43 @@ function EditMovies() {
                absolute right-3 top-1/2 -translate-y-1/2 
                text-2xl transition duration-300"
               />
+              {errorImages && (
+                <p className="text-red-500 text-sm">{errorImages}</p>
+              )}
             </div>
 
-            {errorImages && (
-              <p className="text-red-500 text-sm">{errorImages}</p>
-            )}
+            <div>
+              <Input
+                type="text"
+                name="movie-category"
+                id="movie-category"
+                placeholder="Movie Category"
+                value={movieDetail?.category}
+                onInputChange={(e) => {
+                  setMovieDetail({ ...movieDetail, category: e.target.value });
+                }}
+              />
+              {errorCategory && (
+                <p className="text-red-500 text-sm">{errorCategory}</p>
+              )}
+            </div>
 
-            <Input
-              type="text"
-              name="movie-category"
-              id="movie-category"
-              placeholder="Movie Category"
-              value={movieDetail?.category}
-              onInputChange={(e) => {
-                setMovieDetail({ ...movieDetail, category: e.target.value });
-              }}
-            />
-            {errorCategory && (
-              <p className="text-red-500 text-sm">{errorCategory}</p>
-            )}
-
-            <Input
-              type="text"
-              name="director-name"
-              id="director-name"
-              placeholder="Director Name"
-              value={movieDetail?.director}
-              onInputChange={(e) => {
-                setMovieDetail({ ...movieDetail, director: e.target.value });
-              }}
-            />
-            {errorDirector && (
-              <p className="text-red-500 text-sm">{errorDirector}</p>
-            )}
+            <div>
+              {" "}
+              <Input
+                type="text"
+                name="director-name"
+                id="director-name"
+                placeholder="Director Name"
+                value={movieDetail?.director}
+                onInputChange={(e) => {
+                  setMovieDetail({ ...movieDetail, director: e.target.value });
+                }}
+              />
+              {errorDirector && (
+                <p className="text-red-500 text-sm">{errorDirector}</p>
+              )}
+            </div>
             <div className="flex gap-5">
               <div className="flex flex-col w-full">
                 <p className="text-black pb-1">Realese Year:</p>
