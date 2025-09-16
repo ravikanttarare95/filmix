@@ -13,7 +13,7 @@ function Navbar({ customStyle }) {
     >
       {/* Logo + Menu Toggle */}
       <div className="flex justify-between items-center w-full sm:w-auto">
-        <img src={Logo} alt="Filmix" className="w-24 drop-shadow-lg" />
+        <img src={Logo} alt="Filmix" className="w-20 drop-shadow-lg" />
         <div className="sm:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}

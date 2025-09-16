@@ -7,6 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import toast, { Toaster } from "react-hot-toast";
 import Button from "./../components/Button";
+import Footer from "./../components/Footer";
 
 function AddMovies() {
   const navigate = useNavigate();
@@ -127,7 +128,7 @@ function AddMovies() {
   return (
     <>
       <Navbar />
-      <div className="max-w-3xl  mx-auto p-6 my-5 bg-white rounded-xl shadow-lg">
+      <div className="max-w-3xl  mx-auto p-6 bg-white rounded-xl shadow-lg">
         <h2 className="text-2xl font-bold text-gray-800 border-b-2 border-red-500 pb-2 mb-2">
           🎬 Add a New Movie
         </h2>{" "}
@@ -303,6 +304,7 @@ function AddMovies() {
         </div>
       </div>
       <Toaster position="top-right" />
+      <Footer customStyle={"mt-7.5!"} />
     </>
   );
 }

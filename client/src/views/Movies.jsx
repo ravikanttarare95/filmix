@@ -5,6 +5,7 @@ import { Search as SearchIcon } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import Navbar from "./../components/Navbar";
 import NotFoundPage from "./NotFoundPage";
+import Footer from "./../components/Footer";
 
 function Movies() {
   const [movies, setMovies] = useState([]);
@@ -60,7 +61,7 @@ function Movies() {
     <>
       <Navbar />
       <div className="p-6">
-        <div className="sticky xl:top-16 top-27 z-50 flex items-center shadow-md rounded-full w-full md:w-1/2 mx-auto bg-gray-100 px-5 py-2 mb-15">
+        <div className="sticky xl:top-11 top-23 z-52 flex items-center shadow-md rounded-full w-full md:w-1/2 mx-auto bg-gray-100 px-5 py-2 mb-15">
           <input
             type="text"
             id="seach-bar"
@@ -107,6 +108,7 @@ function Movies() {
         </div>
       </div>{" "}
       <Toaster position="top-right" />
+      <Footer />
     </>
   );
 }
