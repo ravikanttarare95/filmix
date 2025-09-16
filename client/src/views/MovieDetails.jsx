@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import StarRating from "./../components/StarRating";
 import { RiEditBoxFill } from "react-icons/ri";
 
@@ -76,10 +76,13 @@ function MovieDetails() {
 
         {/* Right Side - Details */}
         <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 p-6 rounded-lg shadow-lg space-y-4">
-          <div className="absolute top-5 right-5 flex items-center gap-2 px-0 sm:px-3 py-0 sm:py-1.5 rounded-xs sm:rounded-full bg-gray-800 hover:bg-gray-700 transition-shadow shadow-md hover:shadow-lg cursor-pointer border border-gray-600 text-white text-sm font-medium">
+          <Link
+            to={`/edit_movies/${id}`}
+            className="absolute top-5 right-5 flex items-center gap-2 px-0 sm:px-3 py-0 sm:py-1.5 rounded-xs sm:rounded-full bg-gray-800 hover:bg-gray-700 transition-shadow shadow-md hover:shadow-lg cursor-pointer border border-gray-600 text-white text-sm font-medium"
+          >
             <RiEditBoxFill className="h-5 w-5 sm:h-4 sm:w-4" />
             <span className="hidden sm:inline-block">Edit</span>
-          </div>
+          </Link>
 
           <h2 className="text-2xl md:text-3xl font-bold text-red-400">
             {title}

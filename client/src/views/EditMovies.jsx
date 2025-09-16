@@ -8,8 +8,21 @@ import { useNavigate } from "react-router";
 import toast, { Toaster } from "react-hot-toast";
 import Button from "./../components/Button";
 import Footer from "./../components/Footer";
+import { useParams } from "react-router";
 
-function AddMovies() {
+function EditMovies() {
+  const { id } = useParams();
+  const loadMovieById = async () => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/movies/${id}`
+    );
+
+    setMovieDetail(response.data.data);
+  };
+
+  useEffect(() => {
+    loadMovieById();
+  }, []);
   const navigate = useNavigate();
   const [movieDetail, setMovieDetail] = useState({
     title: "",
@@ -29,7 +42,7 @@ function AddMovies() {
   const [errorReleaseYear, setErrorReleaseYear] = useState("");
   const [errorRating, setErrorRating] = useState("");
 
-  const handleAddMovie = async () => {
+  const handleUpdateMovie = async () => {
     try {
       if (
         movieDetail.title.trim() === "" ||
@@ -59,8 +72,8 @@ function AddMovies() {
       ) {
         return toast.error("Please fix the errors before submitting");
       }
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/movies`,
+      const response = await axios.put(
+        `${import.meta.env.VITE_API_URL}/movies/${id}`,
         movieDetail
       );
       toast.success(response.data.message);
@@ -136,48 +149,38 @@ function AddMovies() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              handleAddMovie();
+              handleUpdateMovie();
             }}
             className="flex flex-col gap-5"
           >
-            <div>
-              {" "}
-              <Input
-                type="text"
-                name="movie-title"
-                id="movie-title"
-                placeholder="Movie Title:"
-                value={movieDetail?.title}
-                onInputChange={(e) => {
-                  setMovieDetail({ ...movieDetail, title: e.target.value });
-                }}
-              />
-              {errorTitle && (
-                <p className="text-red-500 text-sm">{errorTitle}</p>
-              )}
-            </div>
+            <Input
+              type="text"
+              name="movie-title"
+              id="movie-title"
+              placeholder="Movie Title:"
+              value={movieDetail?.title}
+              onInputChange={(e) => {
+                setMovieDetail({ ...movieDetail, title: e.target.value });
+              }}
+            />
+            {errorTitle && <p className="text-red-500 text-sm">{errorTitle}</p>}
 
-            <div>
-              <textarea
-                name="movie-desc"
-                id="movie-desc"
-                placeholder="Movie Description..."
-                className="w-full p-3 h-30 rounded-md  bg-gradient-to-br from-gray-800 to-gray-700 text-white placeholder-gray-400
+            <textarea
+              name="movie-desc"
+              id="movie-desc"
+              placeholder="Movie Description..."
+              className="w-full h-30 p-3 rounded-md  bg-gradient-to-br from-gray-800 to-gray-700 text-white placeholder-gray-400
                  border border-gray-700 
                  focus:border-red-500 focus:ring-1 focus:ring-yellow-400
                  outline-none transition duration-300"
-                value={movieDetail?.description}
-                onChange={(e) =>
-                  setMovieDetail({
-                    ...movieDetail,
-                    description: e.target.value,
-                  })
-                }
-              ></textarea>
-              {errorDescription && (
-                <p className="text-red-500 text-sm">{errorDescription}</p>
-              )}
-            </div>
+              value={movieDetail?.description}
+              onChange={(e) =>
+                setMovieDetail({ ...movieDetail, description: e.target.value })
+              }
+            ></textarea>
+            {errorDescription && (
+              <p className="text-red-500 text-sm">{errorDescription}</p>
+            )}
 
             {movieDetail.images.length !== 0 && (
               <div className="flex gap-5 flex-wrap">
@@ -187,6 +190,10 @@ function AddMovies() {
                       className="absolute -top-2 -right-2 text-white bg-red-500 p-1 rounded-full cursor-pointer shadow-md"
                       size={18}
                       onClick={() => {
+                        if (index < 4)
+                          return toast.error(
+                            "⚠️ Default movie images cannot be deleted!"
+                          );
                         setMovieDetail({
                           ...movieDetail,
                           images: movieDetail.images.filter(
@@ -233,44 +240,39 @@ function AddMovies() {
                absolute right-3 top-1/2 -translate-y-1/2 
                text-2xl transition duration-300"
               />
-              {errorImages && (
-                <p className="text-red-500 text-sm">{errorImages}</p>
-              )}
             </div>
 
-            <div>
-              <Input
-                type="text"
-                name="movie-category"
-                id="movie-category"
-                placeholder="Movie Category"
-                value={movieDetail?.category}
-                onInputChange={(e) => {
-                  setMovieDetail({ ...movieDetail, category: e.target.value });
-                }}
-              />
-              {errorCategory && (
-                <p className="text-red-500 text-sm">{errorCategory}</p>
-              )}
-            </div>
+            {errorImages && (
+              <p className="text-red-500 text-sm">{errorImages}</p>
+            )}
 
-            <div>
-              {" "}
-              <Input
-                type="text"
-                name="director-name"
-                id="director-name"
-                placeholder="Director Name"
-                value={movieDetail?.director}
-                onInputChange={(e) => {
-                  setMovieDetail({ ...movieDetail, director: e.target.value });
-                }}
-              />
-              {errorDirector && (
-                <p className="text-red-500 text-sm">{errorDirector}</p>
-              )}
-            </div>
+            <Input
+              type="text"
+              name="movie-category"
+              id="movie-category"
+              placeholder="Movie Category"
+              value={movieDetail?.category}
+              onInputChange={(e) => {
+                setMovieDetail({ ...movieDetail, category: e.target.value });
+              }}
+            />
+            {errorCategory && (
+              <p className="text-red-500 text-sm">{errorCategory}</p>
+            )}
 
+            <Input
+              type="text"
+              name="director-name"
+              id="director-name"
+              placeholder="Director Name"
+              value={movieDetail?.director}
+              onInputChange={(e) => {
+                setMovieDetail({ ...movieDetail, director: e.target.value });
+              }}
+            />
+            {errorDirector && (
+              <p className="text-red-500 text-sm">{errorDirector}</p>
+            )}
             <div className="flex gap-5">
               <div className="flex flex-col w-full">
                 <p className="text-black pb-1">Realese Year:</p>
@@ -314,7 +316,7 @@ function AddMovies() {
               </div>
             </div>
 
-            <Button type="submit" btnTitle=" Add Movie" />
+            <Button type="submit" btnTitle=" Update Movie" />
           </form>
         </div>
       </div>
@@ -324,4 +326,4 @@ function AddMovies() {
   );
 }
 
-export default AddMovies;
+export default EditMovies;
