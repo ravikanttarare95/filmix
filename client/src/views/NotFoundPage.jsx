@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 
 // If you have the image locally, import it here. Otherwise, use a placeholder.
 import NotFoundImg from "./../assets/not-found-tv.png"; // <-- Place your 404 image here
@@ -26,12 +27,12 @@ function NotFoundPage() {
           Oops! The page you're looking for doesn't exist.
           <br />
           Try searching for a movie or return to the{" "}
-          <a
-            href="/"
+          <Link
+            to="/"
             className="text-red-400 underline hover:text-yellow-400 transition"
           >
             Home
-          </a>{" "}
+          </Link>{" "}
           page.
         </p>
       </div>

@@ -195,7 +195,7 @@ function EditMovies() {
             </div>
 
             {movieDetail.images.length !== 0 && (
-              <div className="flex gap-5 flex-wrap">
+              <div className="flex gap-5 flex-wrap ">
                 {movieDetail.images.map((imageUrl, index) => (
                   <div key={index} className="relative">
                     <X
